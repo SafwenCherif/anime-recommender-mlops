@@ -17,7 +17,7 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies from requirements.txt
-RUN pip install --no-cache-dir -e .
+RUN pip install --no-cache-dir --default-timeout=100 --retries=5 -e .
 
 # Create necessary directories
 RUN mkdir -p artifacts/raw artifacts/processed artifacts/model artifacts/weights artifacts/model_checkpoint
