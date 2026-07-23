@@ -31,9 +31,12 @@ class DataIngestion:
                     blob = bucket.blob(file_name)
                     blob.download_to_filename(file_path)
 
-                    data = pd.read_csv(file_path,nrows=5000000)
-                    data.to_csv(file_path,index=False)
-                    logger.info("Large file detected Only downloading 5M rows")
+                    # Read only first 5M rows and save as trimmed file
+                    data = pd.read_csv(file_path, nrows=5000000)
+                    trimmed_path = file_path + ".tmp"
+                    data.to_csv(trimmed_path, index=False)
+                    os.replace(trimmed_path, file_path)
+                    logger.info("Large file detected - downloaded and trimmed to 5M rows")
                 else:
                     blob = bucket.blob(file_name)
                     blob.download_to_filename(file_path)
