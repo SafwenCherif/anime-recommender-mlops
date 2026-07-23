@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anime-recommender-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: anime-recommender-app
+  template:
+    metadata:
+      labels:
+        app: anime-recommender-app
+    spec:
+      containers:
+      - name: anime-recommender-container
+        image: gcr.io/anime-recommnender-mlops/anime-recommender:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: anime-recommender-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: anime-recommender-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080

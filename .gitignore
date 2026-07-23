@@ -1,0 +1,16 @@
+venv/
+artifacts/raw/
+artifacts/processed/
+artifacts/model/
+artifacts/weights/
+artifacts/model_checkpoint/
+Anime_recommender.egg-info/
+Anime_Recommender.egg-info/
+logs/
+mlruns/
+mlflow.db
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+.vscode/
