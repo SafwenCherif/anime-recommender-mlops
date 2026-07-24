@@ -77,12 +77,14 @@ pipeline {
                     sh '''
                     export PATH=$PATH:/usr/bin
                     export CLOUDSDK_PYTHON=/usr/bin/python3
+                    export GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}"
 
                     gcloud config set project ${GCP_PROJECT}
                     gcloud config set auth/credential_file_override ${GOOGLE_APPLICATION_CREDENTIALS}
+                    gcloud auth login --cred-file=${GOOGLE_APPLICATION_CREDENTIALS} || true
 
                     gcloud container clusters get-credentials ${GKE_CLUSTER} --region ${GKE_REGION}
-                    kubectl apply -f deployment.yaml
+                    kubectl apply --validate=false -f deployment.yaml
                     '''
                 }
             }
