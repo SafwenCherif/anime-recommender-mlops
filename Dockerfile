@@ -16,8 +16,8 @@ WORKDIR /app
 # Copy the application code (model already trained in Jenkins workspace)
 COPY . .
 
-# Install dependencies from requirements.txt
-RUN pip install --no-cache-dir --default-timeout=100 --retries=5 -e .
+# Install dependencies from requirements.txt with retries and longer timeouts
+RUN pip install --no-cache-dir --prefer-binary --default-timeout=300 --retries=10 -e .
 
 # Create necessary directories
 RUN mkdir -p artifacts/raw artifacts/processed artifacts/model artifacts/weights artifacts/model_checkpoint
